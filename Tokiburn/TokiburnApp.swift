@@ -4,6 +4,7 @@ import SwiftUI
 @main
 struct TokiburnApp: App {
     @StateObject private var model = AppModel()
+    @StateObject private var burnGlanceController = BurnGlanceController()
     @AppStorage(AppearanceMode.storageKey) private var appearanceValue = AppearanceMode.dark.rawValue
 
     private var appearance: AppearanceMode {
@@ -16,6 +17,11 @@ struct TokiburnApp: App {
                 .environmentObject(model)
                 .frame(minWidth: 1_020, minHeight: 700)
                 .preferredColorScheme(appearance.colorScheme)
+                .background {
+                    MainWindowReader { window in
+                        burnGlanceController.attach(to: window, model: model)
+                    }
+                }
         }
         .defaultSize(width: 1_240, height: 820)
         .windowStyle(.hiddenTitleBar)
@@ -60,6 +66,7 @@ struct TokiburnApp: App {
 
 private struct SettingsView: View {
     @AppStorage(AppearanceMode.storageKey) private var appearanceValue = AppearanceMode.dark.rawValue
+    @AppStorage(BurnGlancePreference.storageKey) private var showBurnGlance = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
@@ -108,6 +115,21 @@ private struct SettingsView: View {
                     NSWorkspace.shared.activateFileViewerSelecting([UsageArchive.defaultURL])
                 }
                 .disabled(!FileManager.default.fileExists(atPath: UsageArchive.defaultURL.path))
+            }
+
+            HStack {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Burn Glance")
+                        .font(TokiburnTheme.body(12, weight: .semibold))
+                    Text("Show a private spend glance when Tokiburn is minimized.")
+                        .font(TokiburnTheme.body(10))
+                        .foregroundStyle(TokiburnTheme.secondary)
+                }
+
+                Spacer()
+
+                Toggle("Show Burn Glance", isOn: $showBurnGlance)
+                    .labelsHidden()
             }
         }
         .padding(24)

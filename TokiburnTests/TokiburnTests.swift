@@ -141,6 +141,29 @@ final class TokiburnTests: XCTestCase {
         XCTAssertNil(report.comparison(for: .all, now: now, calendar: calendar))
     }
 
+    func testBurnGlanceUsesTruthfulMonthTodayAndPaceMetrics() {
+        let now = calendar.date(from: DateComponents(year: 2026, month: 7, day: 15))!
+        let report = UsageReport(
+            days: [
+                day(2026, 6, 1, cost: 10),
+                day(2026, 6, 15, cost: 20),
+                day(2026, 7, 1, cost: 30),
+                day(2026, 7, 15, cost: 15)
+            ],
+            isDemo: false,
+            loadedAt: now,
+            sourceVersion: nil
+        )
+
+        let metrics = BurnGlanceMetrics(report: report, now: now, calendar: calendar)
+
+        XCTAssertEqual(metrics.monthCost, 45, accuracy: 0.001)
+        XCTAssertEqual(metrics.todayCost, 15, accuracy: 0.001)
+        XCTAssertEqual(metrics.dailyAverage, 3, accuracy: 0.001)
+        XCTAssertEqual(metrics.monthChangeFraction ?? 0, 0.5, accuracy: 0.001)
+        XCTAssertEqual(metrics.comparisonLabel, "+50%")
+    }
+
     func testProviderTotalsSortByCost() {
         let date = calendar.date(from: DateComponents(year: 2026, month: 7, day: 30))!
         let report = UsageReport(

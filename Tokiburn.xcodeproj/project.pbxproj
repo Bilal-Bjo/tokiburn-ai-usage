@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		17ECB774252AA6E1F4BA95B4 /* TokiburnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928BC87E7671D5320E3FD4EE /* TokiburnApp.swift */; };
+		2A2D4B349E07D3FB9BC6DF71 /* FloatingBurnWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D0E77FEF97CF24A30C23BC /* FloatingBurnWidget.swift */; };
 		35AD68A25F8FE592B42300D2 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480F492553FA0577AF23BBB8 /* Components.swift */; };
 		3E52D004197241EA0221C19C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603CE2005BECFD49181BC30D /* AppModel.swift */; };
 		402E3F204A01D4F719053A2A /* ActivityHeatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5734F4D97C3FEA82CBF5A458 /* ActivityHeatmap.swift */; };
@@ -41,6 +42,7 @@
 		83732300ED50CC218D365DA8 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		928BC87E7671D5320E3FD4EE /* TokiburnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokiburnApp.swift; sourceTree = "<group>"; };
 		A0153F2FD7712A09B1C16A55 /* TokiburnTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokiburnTests.swift; sourceTree = "<group>"; };
+		D3D0E77FEF97CF24A30C23BC /* FloatingBurnWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingBurnWidget.swift; sourceTree = "<group>"; };
 		FBAF97F6002583F26CE45EBA /* UsageArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageArchive.swift; sourceTree = "<group>"; };
 		FC198E9A9813FCD033D42BE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDFF3446B8DF3D326C68E435 /* UsageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageLoader.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 			children = (
 				603CE2005BECFD49181BC30D /* AppModel.swift */,
 				FC198E9A9813FCD033D42BE5 /* Assets.xcassets */,
+				D3D0E77FEF97CF24A30C23BC /* FloatingBurnWidget.swift */,
 				83732300ED50CC218D365DA8 /* Models.swift */,
 				928BC87E7671D5320E3FD4EE /* TokiburnApp.swift */,
 				FBAF97F6002583F26CE45EBA /* UsageArchive.swift */,
@@ -210,6 +213,7 @@
 				402E3F204A01D4F719053A2A /* ActivityHeatmap.swift in Sources */,
 				3E52D004197241EA0221C19C /* AppModel.swift in Sources */,
 				35AD68A25F8FE592B42300D2 /* Components.swift in Sources */,
+				2A2D4B349E07D3FB9BC6DF71 /* FloatingBurnWidget.swift in Sources */,
 				B759CB553EF3A0766267E744 /* Models.swift in Sources */,
 				8EE9FA1B60FE11FA7723709C /* RootView.swift in Sources */,
 				CC3D8D641EF32EC96BAE1598 /* Theme.swift in Sources */,
