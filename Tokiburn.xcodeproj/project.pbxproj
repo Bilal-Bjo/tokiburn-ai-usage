@@ -1,0 +1,473 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		17ECB774252AA6E1F4BA95B4 /* TokiburnApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928BC87E7671D5320E3FD4EE /* TokiburnApp.swift */; };
+		35AD68A25F8FE592B42300D2 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480F492553FA0577AF23BBB8 /* Components.swift */; };
+		3E52D004197241EA0221C19C /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 603CE2005BECFD49181BC30D /* AppModel.swift */; };
+		402E3F204A01D4F719053A2A /* ActivityHeatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5734F4D97C3FEA82CBF5A458 /* ActivityHeatmap.swift */; };
+		8EE9FA1B60FE11FA7723709C /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE87D1415AF729AC06F307F /* RootView.swift */; };
+		989D77EC6EFB999233F5AF1F /* UsageArchive.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBAF97F6002583F26CE45EBA /* UsageArchive.swift */; };
+		A8D288617C2A7EAF42247361 /* UsageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFF3446B8DF3D326C68E435 /* UsageLoader.swift */; };
+		B759CB553EF3A0766267E744 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83732300ED50CC218D365DA8 /* Models.swift */; };
+		CC3D8D641EF32EC96BAE1598 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDEF5914E0C2F6D58C94EF1 /* Theme.swift */; };
+		D918295BE66821BC54CB5544 /* TokiburnTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0153F2FD7712A09B1C16A55 /* TokiburnTests.swift */; };
+		E98472DEE46C303E771005EA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC198E9A9813FCD033D42BE5 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		563FC0E8D0862825A9895F80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9E0BB659B2F55AAC265FF472 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 20E09E53D1E57802E36104C3;
+			remoteInfo = Tokiburn;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1579895FA353575D69338588 /* Tokiburn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tokiburn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DDEF5914E0C2F6D58C94EF1 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		20518733B2F6937D905885BB /* TokiburnTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TokiburnTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		480F492553FA0577AF23BBB8 /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		5734F4D97C3FEA82CBF5A458 /* ActivityHeatmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityHeatmap.swift; sourceTree = "<group>"; };
+		603CE2005BECFD49181BC30D /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		7BE87D1415AF729AC06F307F /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		83732300ED50CC218D365DA8 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		928BC87E7671D5320E3FD4EE /* TokiburnApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokiburnApp.swift; sourceTree = "<group>"; };
+		A0153F2FD7712A09B1C16A55 /* TokiburnTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokiburnTests.swift; sourceTree = "<group>"; };
+		FBAF97F6002583F26CE45EBA /* UsageArchive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageArchive.swift; sourceTree = "<group>"; };
+		FC198E9A9813FCD033D42BE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FDFF3446B8DF3D326C68E435 /* UsageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageLoader.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0D29C8C27D7B03564F50BEE9 /* TokiburnTests */ = {
+			isa = PBXGroup;
+			children = (
+				A0153F2FD7712A09B1C16A55 /* TokiburnTests.swift */,
+			);
+			path = TokiburnTests;
+			sourceTree = "<group>";
+		};
+		6D22196A7B376E4D7D33E925 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1579895FA353575D69338588 /* Tokiburn.app */,
+				20518733B2F6937D905885BB /* TokiburnTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9EBDEAC8BBD90006E0CD814E /* Tokiburn */ = {
+			isa = PBXGroup;
+			children = (
+				603CE2005BECFD49181BC30D /* AppModel.swift */,
+				FC198E9A9813FCD033D42BE5 /* Assets.xcassets */,
+				83732300ED50CC218D365DA8 /* Models.swift */,
+				928BC87E7671D5320E3FD4EE /* TokiburnApp.swift */,
+				FBAF97F6002583F26CE45EBA /* UsageArchive.swift */,
+				FDFF3446B8DF3D326C68E435 /* UsageLoader.swift */,
+				B8F5C0F7ABA0B24EDFD989B0 /* Support */,
+				A34F89942DB08CC8B30ABC8D /* Views */,
+			);
+			path = Tokiburn;
+			sourceTree = "<group>";
+		};
+		A34F89942DB08CC8B30ABC8D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5734F4D97C3FEA82CBF5A458 /* ActivityHeatmap.swift */,
+				480F492553FA0577AF23BBB8 /* Components.swift */,
+				7BE87D1415AF729AC06F307F /* RootView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		B8F5C0F7ABA0B24EDFD989B0 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				1DDEF5914E0C2F6D58C94EF1 /* Theme.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		F99C6D3740E4EF9EBC4D169D = {
+			isa = PBXGroup;
+			children = (
+				9EBDEAC8BBD90006E0CD814E /* Tokiburn */,
+				0D29C8C27D7B03564F50BEE9 /* TokiburnTests */,
+				6D22196A7B376E4D7D33E925 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		20E09E53D1E57802E36104C3 /* Tokiburn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32E0D5627AC7311E9C695C12 /* Build configuration list for PBXNativeTarget "Tokiburn" */;
+			buildPhases = (
+				BB9AC75FA022A936CF9619C3 /* Sources */,
+				B695B75E77646D6B751C5BAA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tokiburn;
+			packageProductDependencies = (
+			);
+			productName = Tokiburn;
+			productReference = 1579895FA353575D69338588 /* Tokiburn.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C645CB74C95472722264932D /* TokiburnTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 19A055466F1B67C831961B49 /* Build configuration list for PBXNativeTarget "TokiburnTests" */;
+			buildPhases = (
+				6BB8A1D0067EEE87A8ED4E73 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0FA9EA400D4028A140001F02 /* PBXTargetDependency */,
+			);
+			name = TokiburnTests;
+			packageProductDependencies = (
+			);
+			productName = TokiburnTests;
+			productReference = 20518733B2F6937D905885BB /* TokiburnTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9E0BB659B2F55AAC265FF472 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					20E09E53D1E57802E36104C3 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					C645CB74C95472722264932D = {
+						DevelopmentTeam = "";
+					};
+				};
+			};
+			buildConfigurationList = 4B4E541E1465B247D3C6E11B /* Build configuration list for PBXProject "Tokiburn" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = F99C6D3740E4EF9EBC4D169D;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6D22196A7B376E4D7D33E925 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				20E09E53D1E57802E36104C3 /* Tokiburn */,
+				C645CB74C95472722264932D /* TokiburnTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B695B75E77646D6B751C5BAA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E98472DEE46C303E771005EA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6BB8A1D0067EEE87A8ED4E73 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D918295BE66821BC54CB5544 /* TokiburnTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BB9AC75FA022A936CF9619C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				402E3F204A01D4F719053A2A /* ActivityHeatmap.swift in Sources */,
+				3E52D004197241EA0221C19C /* AppModel.swift in Sources */,
+				35AD68A25F8FE592B42300D2 /* Components.swift in Sources */,
+				B759CB553EF3A0766267E744 /* Models.swift in Sources */,
+				8EE9FA1B60FE11FA7723709C /* RootView.swift in Sources */,
+				CC3D8D641EF32EC96BAE1598 /* Theme.swift in Sources */,
+				17ECB774252AA6E1F4BA95B4 /* TokiburnApp.swift in Sources */,
+				989D77EC6EFB999233F5AF1F /* UsageArchive.swift in Sources */,
+				A8D288617C2A7EAF42247361 /* UsageLoader.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0FA9EA400D4028A140001F02 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 20E09E53D1E57802E36104C3 /* Tokiburn */;
+			targetProxy = 563FC0E8D0862825A9895F80 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		4D770FD25419EFD663DF6E6A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 7;
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Tokiburn;
+				INFOPLIST_KEY_CFBundleShortVersionString = "$(MARKETING_VERSION)";
+				INFOPLIST_KEY_CFBundleVersion = "$(CURRENT_PROJECT_VERSION)";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHighResolutionCapable = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 0.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bilal.tokiburn;
+				PRODUCT_NAME = Tokiburn;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5743869B0655E4941EF1007A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 7;
+				ENABLE_APP_SANDBOX = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Tokiburn;
+				INFOPLIST_KEY_CFBundleShortVersionString = "$(MARKETING_VERSION)";
+				INFOPLIST_KEY_CFBundleVersion = "$(CURRENT_PROJECT_VERSION)";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHighResolutionCapable = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 0.5.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bilal.tokiburn;
+				PRODUCT_NAME = Tokiburn;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7E81BB5AAE88A9ED9049DB88 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A7D0093C4D449B1E15821993 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bilal.tokiburn.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tokiburn.app/Contents/MacOS/Tokiburn";
+			};
+			name = Debug;
+		};
+		DD4848CD46528144D3524427 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		FBC2BABCDCF2D4706819FEAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.bilal.tokiburn.tests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tokiburn.app/Contents/MacOS/Tokiburn";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		19A055466F1B67C831961B49 /* Build configuration list for PBXNativeTarget "TokiburnTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7D0093C4D449B1E15821993 /* Debug */,
+				FBC2BABCDCF2D4706819FEAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		32E0D5627AC7311E9C695C12 /* Build configuration list for PBXNativeTarget "Tokiburn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5743869B0655E4941EF1007A /* Debug */,
+				4D770FD25419EFD663DF6E6A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4B4E541E1465B247D3C6E11B /* Build configuration list for PBXProject "Tokiburn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD4848CD46528144D3524427 /* Debug */,
+				7E81BB5AAE88A9ED9049DB88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9E0BB659B2F55AAC265FF472 /* Project object */;
+}

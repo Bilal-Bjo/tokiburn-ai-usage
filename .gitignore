@@ -1,0 +1,11 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+build/
+data/
+*.csv
+work/
+*.xcuserstate
+xcuserdata/
+outputs/*

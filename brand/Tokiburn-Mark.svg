@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title description">
+  <title id="title">Tokiburn ledger mark</title>
+  <desc id="description">A four by four usage ledger crossed by a descending burn boundary, with one coral current-period cell.</desc>
+  <g fill="#17181B">
+    <path d="M244 244h110v110z"/>
+    <rect x="378" y="244" width="110" height="110" rx="8"/>
+    <rect x="512" y="244" width="110" height="110" rx="8"/>
+    <rect x="646" y="244" width="110" height="110" rx="8"/>
+
+    <rect x="244" y="378" width="110" height="110" rx="8"/>
+    <path d="M378 378h110v110z"/>
+    <rect x="646" y="378" width="110" height="110" rx="8"/>
+
+    <rect x="244" y="512" width="110" height="110" rx="8"/>
+    <path d="M512 512h110v110z"/>
+    <rect x="646" y="512" width="110" height="110" rx="8"/>
+
+    <rect x="244" y="646" width="110" height="110" rx="8"/>
+    <rect x="378" y="646" width="110" height="110" rx="8"/>
+    <rect x="512" y="646" width="110" height="110" rx="8"/>
+    <path d="M646 646h110v110z"/>
+  </g>
+  <rect x="378" y="512" width="110" height="110" rx="8" fill="#FF6248"/>
+</svg>
