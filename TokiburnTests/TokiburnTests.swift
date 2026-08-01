@@ -141,6 +141,61 @@ final class TokiburnTests: XCTestCase {
         XCTAssertNil(report.comparison(for: .all, now: now, calendar: calendar))
     }
 
+    @MainActor
+    func testHistoricalMonthNavigationMovesAllSelectedMetricsTogether() {
+        let now = calendar.date(from: DateComponents(year: 2026, month: 8, day: 15))!
+        let model = AppModel(calendar: calendar, now: { now }, autoRefresh: false)
+        model.report = UsageReport(
+            days: [
+                day(2026, 6, 30, cost: 9),
+                day(2026, 7, 1, cost: 10),
+                day(2026, 7, 31, cost: 20),
+                day(2026, 8, 1, cost: 40)
+            ],
+            isDemo: false,
+            loadedAt: now,
+            sourceVersion: nil
+        )
+
+        model.selectAdjacentMonth(-1)
+
+        XCTAssertEqual(model.selectedMonthTitle, "July 2026")
+        XCTAssertEqual(model.selectedCost, 30, accuracy: 0.001)
+        XCTAssertEqual(model.selectedDays.count, 2)
+        XCTAssertEqual(model.selectedProviders.first?.cost ?? 0, 30, accuracy: 0.001)
+        XCTAssertEqual(model.selectedComparison?.previousCost ?? 0, 9, accuracy: 0.001)
+        XCTAssertEqual(model.selectedComparison?.previousLabel, "vs previous month")
+    }
+
+    @MainActor
+    func testMonthNavigationStopsAtArchiveBounds() {
+        let now = calendar.date(from: DateComponents(year: 2026, month: 8, day: 15))!
+        let model = AppModel(calendar: calendar, now: { now }, autoRefresh: false)
+        model.report = UsageReport(
+            days: [
+                day(2026, 7, 1, cost: 10),
+                day(2026, 8, 1, cost: 20)
+            ],
+            isDemo: false,
+            loadedAt: now,
+            sourceVersion: nil
+        )
+
+        XCTAssertTrue(model.canSelectPreviousMonth)
+        XCTAssertFalse(model.canSelectNextMonth)
+
+        model.selectAdjacentMonth(-1)
+        model.selectAdjacentMonth(-1)
+        XCTAssertEqual(model.selectedMonthTitle, "July 2026")
+        XCTAssertFalse(model.canSelectPreviousMonth)
+        XCTAssertTrue(model.canSelectNextMonth)
+
+        model.selectAdjacentMonth(1)
+        model.selectAdjacentMonth(1)
+        XCTAssertEqual(model.selectedMonthTitle, "August 2026")
+        XCTAssertFalse(model.canSelectNextMonth)
+    }
+
     func testBurnGlanceUsesTruthfulMonthTodayAndPaceMetrics() {
         let now = calendar.date(from: DateComponents(year: 2026, month: 7, day: 15))!
         let report = UsageReport(

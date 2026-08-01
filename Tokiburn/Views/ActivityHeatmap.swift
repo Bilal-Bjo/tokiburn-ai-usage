@@ -3,6 +3,7 @@ import SwiftUI
 
 struct ActivityHeatmap: View {
     @EnvironmentObject private var model: AppModel
+    let anchorDate: Date
 
     private let columns = 18
     private let cellSize: CGFloat = 12
@@ -37,11 +38,11 @@ struct ActivityHeatmap: View {
 
     private var weeks: [[Date]] {
         let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        let weekday = calendar.component(.weekday, from: today)
+        let anchor = calendar.startOfDay(for: anchorDate)
+        let weekday = calendar.component(.weekday, from: anchor)
         let daysSinceMonday = (weekday + 5) % 7
-        let monday = calendar.date(byAdding: .day, value: -daysSinceMonday, to: today) ?? today
-        let start = calendar.date(byAdding: .day, value: -(columns - 1) * 7, to: monday) ?? today
+        let monday = calendar.date(byAdding: .day, value: -daysSinceMonday, to: anchor) ?? anchor
+        let start = calendar.date(byAdding: .day, value: -(columns - 1) * 7, to: monday) ?? anchor
 
         return (0..<columns).map { column in
             (0..<7).compactMap { row in
@@ -68,7 +69,7 @@ struct ActivityHeatmap: View {
         let intensity = usage.map {
             log10(Double($0.totalTokens) + 1) / log10(Double(maximumTokens) + 1)
         } ?? 0
-        let future = normalized > Calendar.current.startOfDay(for: Date())
+        let future = normalized > Calendar.current.startOfDay(for: anchorDate)
 
         return RoundedRectangle(cornerRadius: 2.5, style: .continuous)
             .fill(

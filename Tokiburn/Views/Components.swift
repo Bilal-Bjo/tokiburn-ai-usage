@@ -41,6 +41,53 @@ struct PeriodSelector: View {
     }
 }
 
+struct MonthNavigator: View {
+    @EnvironmentObject private var model: AppModel
+
+    var body: some View {
+        HStack(spacing: 4) {
+            navigationButton(
+                systemName: "chevron.left",
+                label: "Previous month",
+                enabled: model.canSelectPreviousMonth
+            ) {
+                model.selectAdjacentMonth(-1)
+            }
+
+            Eyebrow(text: model.selectedMonthTitle)
+                .contentTransition(.numericText())
+                .frame(minWidth: 104)
+
+            navigationButton(
+                systemName: "chevron.right",
+                label: "Next month",
+                enabled: model.canSelectNextMonth
+            ) {
+                model.selectAdjacentMonth(1)
+            }
+        }
+    }
+
+    private func navigationButton(
+        systemName: String,
+        label: String,
+        enabled: Bool,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            Image(systemName: systemName)
+                .font(.system(size: 8, weight: .bold))
+                .frame(width: 18, height: 18)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .foregroundStyle(enabled ? TokiburnTheme.secondary : TokiburnTheme.line)
+        .disabled(!enabled)
+        .help(label)
+        .accessibilityLabel(label)
+    }
+}
+
 struct RefreshButton: View {
     @EnvironmentObject private var model: AppModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion

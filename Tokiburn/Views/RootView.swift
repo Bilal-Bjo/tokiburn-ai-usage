@@ -83,7 +83,11 @@ struct RootView: View {
         HStack(alignment: .bottom, spacing: 50) {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(spacing: 7) {
-                    Eyebrow(text: model.selectedPeriod.title)
+                    if model.selectedPeriod == .month {
+                        MonthNavigator()
+                    } else {
+                        Eyebrow(text: model.selectedPeriodTitle)
+                    }
                     Text("·")
                         .foregroundStyle(TokiburnTheme.tertiary)
                     Text("Estimated list-price value")
@@ -229,7 +233,7 @@ struct RootView: View {
                         .font(TokiburnTheme.body(11))
                         .foregroundStyle(TokiburnTheme.secondary)
                 }
-                Text("Past 18 weeks")
+                Text(model.activityRangeLabel)
                     .font(TokiburnTheme.mono(9, weight: .medium))
                     .foregroundStyle(TokiburnTheme.tertiary)
             }
@@ -239,7 +243,7 @@ struct RootView: View {
                 .fill(TokiburnTheme.line)
                 .frame(width: 1, height: 78)
 
-            ActivityHeatmap()
+            ActivityHeatmap(anchorDate: model.activityAnchorDate)
                 .frame(width: 420, alignment: .leading)
 
             Spacer(minLength: 0)
@@ -306,12 +310,12 @@ struct RootView: View {
 
     private var recentActiveDays: Int {
         let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        let start = calendar.date(byAdding: .day, value: -125, to: today) ?? today
+        let end = calendar.startOfDay(for: model.activityAnchorDate)
+        let start = calendar.date(byAdding: .day, value: -125, to: end) ?? end
         return Set(
             model.report.days
                 .map { calendar.startOfDay(for: $0.date) }
-                .filter { $0 >= start && $0 <= today }
+                .filter { $0 >= start && $0 <= end }
         ).count
     }
 

@@ -5,40 +5,98 @@ import SwiftUI
 final class AppModel: ObservableObject {
     @Published var report = UsageLoader.demo()
     @Published var selectedPeriod: UsagePeriod = .month
+    @Published private(set) var selectedMonthStart: Date
     @Published var isRefreshing = false
 
+    private let calendar: Calendar
+    private let now: () -> Date
+
     var selectedCost: Double {
-        report.cost(in: selectedPeriod)
+        report.cost(in: selectedPeriod, now: selectedReferenceDate, calendar: calendar)
     }
 
     var selectedDays: [DailyUsage] {
-        report.days(in: selectedPeriod)
+        report.days(in: selectedPeriod, now: selectedReferenceDate, calendar: calendar)
     }
 
     var selectedTokens: Int {
-        report.tokens(in: selectedPeriod)
+        report.tokens(in: selectedPeriod, now: selectedReferenceDate, calendar: calendar)
     }
 
     var selectedProviders: [ProviderUsage] {
-        report.providerTotals(in: selectedPeriod)
+        report.providerTotals(in: selectedPeriod, now: selectedReferenceDate, calendar: calendar)
     }
 
     var selectedActiveDays: Int {
-        report.activeDays(in: selectedPeriod)
+        report.activeDays(in: selectedPeriod, now: selectedReferenceDate, calendar: calendar)
     }
 
     var selectedComparison: PeriodComparison? {
-        report.comparison(for: selectedPeriod)
+        guard let comparison = report.comparison(
+            for: selectedPeriod,
+            now: selectedReferenceDate,
+            calendar: calendar
+        ) else {
+            return nil
+        }
+
+        guard selectedPeriod == .month, !isCurrentMonth else {
+            return comparison
+        }
+
+        return PeriodComparison(
+            currentCost: comparison.currentCost,
+            previousCost: comparison.previousCost,
+            previousLabel: "vs previous month"
+        )
     }
 
-    init() {
+    var selectedPeriodTitle: String {
+        selectedPeriod == .month ? selectedMonthTitle : selectedPeriod.title
+    }
+
+    var selectedMonthTitle: String {
+        selectedMonthStart.formatted(.dateTime.month(.wide).year())
+    }
+
+    var canSelectPreviousMonth: Bool {
+        guard let earliestMonthStart else { return false }
+        return selectedMonthStart > earliestMonthStart
+    }
+
+    var canSelectNextMonth: Bool {
+        selectedMonthStart < currentMonthStart
+    }
+
+    var activityAnchorDate: Date {
+        selectedPeriod == .month ? selectedReferenceDate : now()
+    }
+
+    var activityRangeLabel: String {
+        if selectedPeriod == .month, !isCurrentMonth {
+            return "18 weeks ending \(selectedMonthStart.formatted(.dateTime.month(.abbreviated).year()))"
+        }
+        return "Past 18 weeks"
+    }
+
+    init(
+        calendar: Calendar = .current,
+        now: @escaping () -> Date = Date.init,
+        autoRefresh: Bool = true
+    ) {
+        self.calendar = calendar
+        self.now = now
+        self.selectedMonthStart = calendar.dateInterval(of: .month, for: now())?.start ?? now()
+
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("--provider-preview") {
             report = Self.providerPreviewReport()
             return
         }
         #endif
-        refresh()
+        if autoRefresh {
+            refresh()
+        }
     }
 
     func refresh() {
@@ -60,6 +118,40 @@ final class AppModel: ObservableObject {
 
     func select(_ period: UsagePeriod) {
         selectedPeriod = period
+    }
+
+    func selectAdjacentMonth(_ offset: Int) {
+        guard offset == -1 || offset == 1 else { return }
+        guard let candidate = calendar.date(byAdding: .month, value: offset, to: selectedMonthStart) else {
+            return
+        }
+
+        if offset < 0, canSelectPreviousMonth {
+            selectedMonthStart = max(candidate, earliestMonthStart ?? candidate)
+        } else if offset > 0, canSelectNextMonth {
+            selectedMonthStart = min(candidate, currentMonthStart)
+        }
+    }
+
+    private var currentMonthStart: Date {
+        calendar.dateInterval(of: .month, for: now())?.start ?? calendar.startOfDay(for: now())
+    }
+
+    private var earliestMonthStart: Date? {
+        guard let earliest = report.days.map(\.date).min() else { return nil }
+        return calendar.dateInterval(of: .month, for: earliest)?.start
+    }
+
+    private var isCurrentMonth: Bool {
+        selectedMonthStart == currentMonthStart
+    }
+
+    private var selectedReferenceDate: Date {
+        guard selectedPeriod == .month, !isCurrentMonth else { return now() }
+        guard let nextMonth = calendar.date(byAdding: .month, value: 1, to: selectedMonthStart) else {
+            return selectedMonthStart
+        }
+        return nextMonth.addingTimeInterval(-1)
     }
 
     #if DEBUG
