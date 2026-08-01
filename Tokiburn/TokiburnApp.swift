@@ -67,6 +67,7 @@ struct TokiburnApp: App {
 private struct SettingsView: View {
     @AppStorage(AppearanceMode.storageKey) private var appearanceValue = AppearanceMode.dark.rawValue
     @AppStorage(BurnGlancePreference.storageKey) private var showBurnGlance = true
+    @AppStorage(BurnPulseInterval.storageKey) private var burnPulseMinutes = BurnPulseInterval.off.rawValue
 
     var body: some View {
         VStack(alignment: .leading, spacing: 22) {
@@ -130,6 +131,27 @@ private struct SettingsView: View {
 
                 Toggle("Show Burn Glance", isOn: $showBurnGlance)
                     .labelsHidden()
+            }
+
+            HStack {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Live updates")
+                        .font(TokiburnTheme.body(12, weight: .semibold))
+                    Text("Refresh only while Burn Glance is visible.")
+                        .font(TokiburnTheme.body(10))
+                        .foregroundStyle(TokiburnTheme.secondary)
+                }
+
+                Spacer()
+
+                Picker("Live updates", selection: $burnPulseMinutes) {
+                    ForEach(BurnPulseInterval.allCases) { interval in
+                        Text(interval.title).tag(interval.rawValue)
+                    }
+                }
+                .labelsHidden()
+                .frame(width: 96)
+                .disabled(!showBurnGlance)
             }
         }
         .padding(24)

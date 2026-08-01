@@ -42,13 +42,20 @@ final class AppModel: ObservableObject {
     }
 
     func refresh() {
-        guard !isRefreshing else { return }
-        isRefreshing = true
         Task {
-            let loaded = await UsageLoader.load()
-            report = loaded
-            isRefreshing = false
+            _ = await refreshNow()
         }
+    }
+
+    @discardableResult
+    func refreshNow() async -> UsageReport? {
+        guard !isRefreshing else { return nil }
+        isRefreshing = true
+        defer { isRefreshing = false }
+
+        let loaded = await UsageLoader.load()
+        report = loaded
+        return loaded
     }
 
     func select(_ period: UsagePeriod) {

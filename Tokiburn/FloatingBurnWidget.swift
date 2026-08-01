@@ -5,6 +5,68 @@ enum BurnGlancePreference {
     static let storageKey = "showBurnGlanceWhenMinimized"
 }
 
+enum BurnPulseInterval: Int, CaseIterable, Identifiable {
+    static let storageKey = "burnPulseIntervalMinutes"
+
+    case off = 0
+    case fiveMinutes = 5
+    case tenMinutes = 10
+    case thirtyMinutes = 30
+
+    var id: Int { rawValue }
+
+    var title: String {
+        switch self {
+        case .off: "Off"
+        case .fiveMinutes: "5 min"
+        case .tenMinutes: "10 min"
+        case .thirtyMinutes: "30 min"
+        }
+    }
+
+    var timeInterval: TimeInterval? {
+        guard self != .off else { return nil }
+        return TimeInterval(rawValue * 60)
+    }
+
+    static func stored(_ value: Int) -> BurnPulseInterval {
+        BurnPulseInterval(rawValue: value) ?? .off
+    }
+}
+
+struct BurnPulseChange: Equatable {
+    let delta: Double
+    let since: Date
+
+    static func positive(previousCost: Double, newCost: Double, since: Date) -> BurnPulseChange? {
+        let delta = newCost - previousCost
+        guard delta >= 0.01 else { return nil }
+        return BurnPulseChange(delta: delta, since: since)
+    }
+
+    var deltaLabel: String {
+        if delta >= 1_000_000 {
+            return "+$\(compact(delta / 1_000_000))M"
+        }
+        if delta >= 1_000 {
+            return "+$\(compact(delta / 1_000))K"
+        }
+        return "+\(delta.formCurrency)"
+    }
+
+    var contextLabel: String {
+        "SINCE \(since.formatted(date: .omitted, time: .shortened).uppercased())"
+    }
+
+    private func compact(_ value: Double) -> String {
+        value.formatted(
+            .number
+                .locale(Locale(identifier: "en_US"))
+                .precision(.fractionLength(0...1))
+        )
+    }
+}
+
 struct BurnGlanceMetrics: Equatable {
     let monthCost: Double
     let todayCost: Double
@@ -41,12 +103,16 @@ struct BurnGlanceMetrics: Equatable {
 @MainActor
 final class BurnGlanceController: NSObject, ObservableObject {
     @Published private(set) var isExpanded = false
+    @Published private(set) var pulseChange: BurnPulseChange?
+    @Published private(set) var lastPulseChange: BurnPulseChange?
 
     private weak var ownerWindow: NSWindow?
     private weak var model: AppModel?
     private var panel: BurnGlancePanel?
     private var observations: [NSObjectProtocol] = []
     private var isDismissedForCurrentMiniaturization = false
+    private var pulseTimer: Timer?
+    private var pulseDismissTask: Task<Void, Never>?
 
     private let collapsedSize = NSSize(width: 184, height: 46)
     private let expandedSize = NSSize(width: 254, height: 132)
@@ -137,6 +203,11 @@ final class BurnGlanceController: NSObject, ObservableObject {
         UserDefaults.standard.object(forKey: BurnGlancePreference.storageKey) as? Bool ?? true
     }
 
+    private var pulseInterval: BurnPulseInterval {
+        let stored = UserDefaults.standard.integer(forKey: BurnPulseInterval.storageKey)
+        return BurnPulseInterval.stored(stored)
+    }
+
     private func showIfNeeded() {
         guard
             isEnabled,
@@ -155,28 +226,90 @@ final class BurnGlanceController: NSObject, ObservableObject {
         panel.setContentSize(collapsedSize)
         positionPanel(animated: false)
         panel.orderFrontRegardless()
+        schedulePulseTimer()
     }
 
     private func beginMiniaturizedSession() {
         isDismissedForCurrentMiniaturization = false
+        lastPulseChange = nil
         showIfNeeded()
     }
 
     private func endMiniaturizedSession() {
         isDismissedForCurrentMiniaturization = false
+        lastPulseChange = nil
         hide()
     }
 
     private func hide() {
         isExpanded = false
+        pulseChange = nil
+        pulseTimer?.invalidate()
+        pulseTimer = nil
+        pulseDismissTask?.cancel()
+        pulseDismissTask = nil
         panel?.orderOut(nil)
     }
 
     private func preferenceDidChange() {
         if isEnabled {
-            showIfNeeded()
+            if panel?.isVisible == true {
+                schedulePulseTimer()
+            } else {
+                showIfNeeded()
+            }
         } else {
             hide()
+        }
+    }
+
+    private func schedulePulseTimer() {
+        pulseTimer?.invalidate()
+        pulseTimer = nil
+
+        guard
+            panel?.isVisible == true,
+            let timeInterval = pulseInterval.timeInterval
+        else { return }
+
+        let timer = Timer(timeInterval: timeInterval, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                await self?.refreshForPulse()
+            }
+        }
+        RunLoop.main.add(timer, forMode: .common)
+        pulseTimer = timer
+    }
+
+    private func refreshForPulse() async {
+        guard
+            panel?.isVisible == true,
+            pulseInterval != .off,
+            let model
+        else { return }
+
+        let previousCost = model.report.cost(in: .month)
+        let since = model.report.loadedAt
+        guard let refreshed = await model.refreshNow() else { return }
+        guard panel?.isVisible == true, !refreshed.isDemo else { return }
+
+        let newCost = refreshed.cost(in: .month)
+        guard let change = BurnPulseChange.positive(
+            previousCost: previousCost,
+            newCost: newCost,
+            since: since
+        ) else { return }
+
+        pulseDismissTask?.cancel()
+        lastPulseChange = change
+        pulseChange = change
+        pulseDismissTask = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(3))
+            guard !Task.isCancelled else { return }
+            await MainActor.run {
+                self?.pulseChange = nil
+                self?.pulseDismissTask = nil
+            }
         }
     }
 
@@ -291,6 +424,10 @@ private struct BurnGlanceView: View {
                         RoundedRectangle(cornerRadius: 2, style: .continuous)
                             .fill(TokiburnTheme.accent)
                             .frame(width: 3, height: 19)
+                            .shadow(
+                                color: TokiburnTheme.accent.opacity(controller.pulseChange == nil ? 0 : 0.55),
+                                radius: controller.pulseChange == nil ? 0 : 5
+                            )
 
                         VStack(alignment: .leading, spacing: 1) {
                             Text(metrics.monthCost.formCurrency)
@@ -299,10 +436,16 @@ private struct BurnGlanceView: View {
                                 .monospacedDigit()
                                 .contentTransition(.numericText(value: metrics.monthCost))
 
-                            Text("THIS MONTH")
+                            Text(pulseSummary)
                                 .font(TokiburnTheme.mono(8, weight: .semibold))
-                                .tracking(0.7)
-                                .foregroundStyle(TokiburnTheme.tertiary)
+                                .tracking(controller.pulseChange == nil ? 0.7 : 0.25)
+                                .foregroundStyle(
+                                    controller.pulseChange == nil
+                                        ? TokiburnTheme.tertiary
+                                        : TokiburnTheme.accent
+                                )
+                                .contentTransition(.opacity)
+                                .lineLimit(1)
                         }
 
                         Spacer(minLength: 8)
@@ -354,14 +497,18 @@ private struct BurnGlanceView: View {
                 .padding(.horizontal, 12)
 
                 HStack(spacing: 5) {
-                    Image(systemName: "lock.fill")
+                    Image(systemName: controller.lastPulseChange == nil ? "lock.fill" : "arrow.up.right")
                         .font(.system(size: 8, weight: .semibold))
-                    Text("Local estimate")
+                    Text(expandedFooterLabel)
                     Spacer()
                     Text(model.report.loadedAt.formatted(date: .omitted, time: .shortened))
                 }
                 .font(TokiburnTheme.body(9, weight: .medium))
-                .foregroundStyle(TokiburnTheme.tertiary)
+                .foregroundStyle(
+                    controller.lastPulseChange == nil
+                        ? TokiburnTheme.tertiary
+                        : TokiburnTheme.accent
+                )
                 .padding(.horizontal, 13)
                 .padding(.bottom, 9)
             }
@@ -386,6 +533,10 @@ private struct BurnGlanceView: View {
             reduceMotion ? nil : .spring(response: 0.2, dampingFraction: 0.96),
             value: controller.isExpanded
         )
+        .animation(
+            reduceMotion ? .easeOut(duration: 0.12) : .easeOut(duration: 0.18),
+            value: controller.pulseChange
+        )
         .contextMenu {
             Button("Open Tokiburn") {
                 controller.restoreTokiburn()
@@ -401,6 +552,21 @@ private struct BurnGlanceView: View {
                 controller.disable()
             }
         }
+    }
+
+    private var pulseSummary: String {
+        guard let pulseChange = controller.pulseChange else {
+            return "THIS MONTH"
+        }
+        return "\(pulseChange.deltaLabel) · \(pulseChange.contextLabel)"
+    }
+
+    private var expandedFooterLabel: String {
+        guard let lastPulseChange = controller.lastPulseChange else {
+            return "Local estimate"
+        }
+        return "\(lastPulseChange.deltaLabel) since "
+            + lastPulseChange.since.formatted(date: .omitted, time: .shortened)
     }
 
     private func glanceMetric(title: String, value: String) -> some View {

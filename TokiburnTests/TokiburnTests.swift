@@ -164,6 +164,38 @@ final class TokiburnTests: XCTestCase {
         XCTAssertEqual(metrics.comparisonLabel, "+50%")
     }
 
+    func testBurnPulseOnlyReportsRealPositiveChanges() {
+        let since = calendar.date(from: DateComponents(year: 2026, month: 8, day: 1, hour: 10))!
+
+        let change = BurnPulseChange.positive(
+            previousCost: 100,
+            newCost: 103.42,
+            since: since
+        )
+
+        XCTAssertEqual(change?.delta ?? 0, 3.42, accuracy: 0.001)
+        XCTAssertEqual(change?.deltaLabel, "+$3.42")
+        XCTAssertEqual(
+            BurnPulseChange(delta: 1_234.56, since: since).deltaLabel,
+            "+$1.2K"
+        )
+        XCTAssertEqual(
+            BurnPulseChange(delta: 2_000_000, since: since).deltaLabel,
+            "+$2M"
+        )
+        XCTAssertNil(BurnPulseChange.positive(previousCost: 100, newCost: 100.009, since: since))
+        XCTAssertNil(BurnPulseChange.positive(previousCost: 100, newCost: 98, since: since))
+    }
+
+    func testBurnPulseIntervalsAreExplicitAndDefaultUnknownValuesToOff() {
+        XCTAssertNil(BurnPulseInterval.off.timeInterval)
+        XCTAssertEqual(BurnPulseInterval.fiveMinutes.timeInterval, 300)
+        XCTAssertEqual(BurnPulseInterval.tenMinutes.timeInterval, 600)
+        XCTAssertEqual(BurnPulseInterval.thirtyMinutes.timeInterval, 1_800)
+        XCTAssertEqual(BurnPulseInterval.stored(10), .tenMinutes)
+        XCTAssertEqual(BurnPulseInterval.stored(17), .off)
+    }
+
     func testProviderTotalsSortByCost() {
         let date = calendar.date(from: DateComponents(year: 2026, month: 7, day: 30))!
         let report = UsageReport(
